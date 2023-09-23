@@ -2,6 +2,17 @@
 travail_pratique
 
 
+---
+title: "Example Report"
+author: "aaaa"
+format: pdf
+toc: true
+number-sections: true
+jupyter: python3
+---
+
+
+
 ```{python}
 #| output: true
 #| echo: false
