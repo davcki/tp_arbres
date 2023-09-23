@@ -31,3 +31,12 @@ sns.set_palette("colorblind")
 sns.set_style("white")
 _ = sns.axes_style()
 ```
+
+
+```{python}
+np.random.seed(1)
+n = 100
+mu = [1., 1.]
+sigma = [1., 1.]
+rand_gauss(n, mu, sigma)
+```
