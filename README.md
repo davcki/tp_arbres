@@ -34,6 +34,8 @@ _ = sns.axes_style()
 
 
 ```{python}
+#| output: true
+
 np.random.seed(1)
 n = 100
 mu = [1., 1.]
