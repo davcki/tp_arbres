@@ -3,6 +3,7 @@ travail_pratique
 
 
 ```{python}
+#| output: true
 #| echo: false
 import os
 import numpy as np
