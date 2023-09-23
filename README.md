@@ -1,9 +1,5 @@
-# Travail Pratique 2 : Arbres
-travail_pratique
-
-
 ---
-title: "Example Report"
+title: "Travail Pratique 2 - ARBRES"
 author: "aaaa"
 format: pdf
 toc: true
