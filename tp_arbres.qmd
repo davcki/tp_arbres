@@ -37,6 +37,11 @@ _ = sns.axes_style()
 ```
 
 
+Nous allons manipuler des arbres de décision dans le cadre d'une classification. A partir de différentes variables, nous souhaitons attribuer une étiquette (ici des entiers naturels) à un individu.
+Dans le cadre du modèle linéaire, on cherche à prédire une valeur numérique à partir des valeurs que prennent des variables et non une classe.
+Cela ne nous empêche pas de définir une certaine homogénéité. Par exemple, deux valeurs numériques pourrait appartenir à la même classe si leurs parties entières sont égales. Cela nous permettrait de créer des arbres de décision pour des ensembles d'apprentissage $\{ (\textbf{x}_i, y_i)_{1\leq i \leq n}\}$.
+
+
 On simule une réalisation d'un échantillon de taille 456 avec la fonction rand_checkers définie dans **tp_arbres_source.py**.
 
 
@@ -351,6 +356,22 @@ Décidons de la profondeur de l'arbre grâce à la validation croisée (nous uti
 #| output: true
 #| echo: true
 
-#sklearn.cross_validation.cross_val_score()
+from sklearn.model_selection import cross_val_score
+
+dmax = 10                   #on calcule l'estimation du score
+                            #pour des arbres de profondeur de 1 à 10
+
+scores = np.zeros(dmax)     #vecteur qui doit contenir les estimation du score
+
+#pour chaque profondeur d'arbre, on calcule le score estimé par validation croisée sur des
+#partitions de 5 sous-ensembles de nos données (d'où le "cv=5")
+#on choisit par la suite l'arbre qui a le plus grand score.
+
+for i in range(dmax):
+    arbre = tree.DecisionTreeClassifier(criterion="entropy", max_depth=i+1)
+    scores[i] = cross_val_score(arbre, data_X, data_y, cv=5).mean()
+
+scores
 ```
 
+On obtient le plus grand score estimé avec une profondeur d'arbre égale à 9.
