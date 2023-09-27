@@ -130,37 +130,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>scores_entropy <span class="op">=</span> np.zeros(dmax)  <span class="co">#vecteur qui contiendra les score des arbres entropy</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>scores_gini <span class="op">=</span> np.zeros(dmax)     <span class="co">#vecteur qui contiendra les score des arbres gini</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))     <span class="co">#formalité graphique</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dmax):</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    dt_entropy <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    dt_entropy.fit(X_train, y_train)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    scores_entropy[i] <span class="op">=</span> dt_entropy.score(X_train, y_train)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    dt_gini <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"gini"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    dt_gini.fit(X_train, y_train)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    scores_gini[i] <span class="op">=</span> dt_gini.score(X_train, y_train)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.plot(np.arange(dmax), scores_entropy, label<span class="op">=</span><span class="st">"entropy"</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.plot(np.arange(dmax), scores_gini, label<span class="op">=</span><span class="st">"gini"</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Max depth'</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Accuracy Score'</span>)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.draw()</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Scores with entropy criterion: "</span>, scores_entropy)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Scores with Gini criterion: "</span>, scores_gini)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Scores with entropy criterion:  [0.27192982 0.27850877 0.2872807  0.30921053 0.3245614  0.3245614
- 0.33552632 0.34649123 0.36184211 0.39912281 0.50877193 0.66666667]
-Scores with Gini criterion:  [0.27192982 0.28070175 0.2872807  0.3004386  0.32236842 0.36622807
- 0.50877193 0.63596491 0.79385965 0.84868421 0.94517544 0.97587719]</code></pre>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dmax):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    dt_entropy <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    dt_entropy.fit(X_train, y_train)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    scores_entropy[i] <span class="op">=</span> dt_entropy.score(X_train, y_train)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    dt_gini <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"gini"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    dt_gini.fit(X_train, y_train)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    scores_gini[i] <span class="op">=</span> dt_gini.score(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<pre><code>&lt;Figure size 1440x960 with 0 Axes&gt;</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="README_files/figure-html/cell-6-output-3.png" width="867" height="992"></p>
+<p><img src="README_files/figure-html/cell-7-output-1.png" width="867" height="992"></p>
 </div>
 </div>
 

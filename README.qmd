@@ -87,8 +87,6 @@ dmax = 12
 scores_entropy = np.zeros(dmax)  #vecteur qui contiendra les score des arbres entropy
 scores_gini = np.zeros(dmax)     #vecteur qui contiendra les score des arbres gini
 
-plt.figure(figsize=(15, 10))     #formalité graphique
-
 for i in range(dmax):
     dt_entropy = tree.DecisionTreeClassifier(criterion="entropy", max_depth=i+1)
     dt_entropy.fit(X_train, y_train)
@@ -97,6 +95,11 @@ for i in range(dmax):
     dt_gini = tree.DecisionTreeClassifier(criterion="gini", max_depth=i+1)
     dt_gini.fit(X_train, y_train)
     scores_gini[i] = dt_gini.score(X_train, y_train)
+```
+
+```{python}
+#| output: true
+#| echo: false
 
 plt.figure()
 plt.plot(np.arange(dmax), scores_entropy, label="entropy")
@@ -105,6 +108,4 @@ plt.xlabel('Max depth')
 plt.ylabel('Accuracy Score')
 plt.legend()
 plt.draw()
-print("Scores with entropy criterion: ", scores_entropy)
-print("Scores with Gini criterion: ", scores_gini)
 ```
