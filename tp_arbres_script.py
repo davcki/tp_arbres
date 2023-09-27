@@ -159,7 +159,6 @@ plt.xlabel('Max depth')
 plt.ylabel('Accuracy Score')
 plt.legend()
 plt.draw()
-print("Scores with entropy criterion: ", scores_entropy)
 print("Scores with Gini criterion: ", scores_gini)
 
 #%%

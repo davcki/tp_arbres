@@ -78,7 +78,7 @@ y_train   = data4[:,2].astype(int)
 ```
 
 
-Pour i allant de 1 à 12, on calcule le pourcentage d'erreurs commises par les deux arbres dont la profondeur est fixée à i (le pourcentage d'erreurs est donné par le module **score** de la fonction **DecisionTreeClassifier**).
+Pour i allant de 1 à 12, on calcule le pourcentage d'erreurs commises par les deux arbres dont la profondeur est fixée à i (le pourcentage d'erreurs est calculé grâce au score donné par le module **score** de la fonction **DecisionTreeClassifier**).
 On obtient ainsi le pourcentage d'erreur de chaque arbre en fonction de leur profondeur, on trace leurs courbes.
 
 
@@ -102,10 +102,87 @@ for i in range(dmax):
 #| echo: false
 
 plt.figure()
-plt.plot(np.arange(dmax), scores_entropy, label="entropy")
-plt.plot(np.arange(dmax), scores_gini, label="gini")
+plt.plot(np.arange(dmax), 1-scores_entropy, label="entropy")
+plt.plot(np.arange(dmax), 1-scores_gini, label="gini")
 plt.xlabel('Max depth')
 plt.ylabel('Accuracy Score')
 plt.legend()
 plt.draw()
+```
+
+
+Le nombre de nœuds qui minimise le pourcentage d'erreurs est
+
+
+```{python}
+#| output: true
+#| echo: true
+
+p = 1-scores_entropy
+m = min(p)
+np.where(p == m)[0][0]+1
+```
+
+
+Affichons la classification obtenue avec l'arbre de l'entropie à l'aide de la fonction *frontiere* du fichier *tp_arbres_source.py*.
+
+
+```{python}
+#| output: true
+#| echo: true
+
+dt_entropy.max_depth = 12
+
+plt.figure()
+frontiere(lambda x: dt_entropy.predict(x.reshape((1, -1))), X_train, y_train, step=100)
+plt.title("Best frontier with entropy criterion")
+plt.draw()
+```
+
+
+
+
+```{python}
+#| output: true
+#| echo: true
+from sklearn.tree import plot_tree
+plot_step = 10
+plt.figure()
+clf = dt_entropy.fit(X_train, y_train)
+plot_tree(clf, filled=True)
+```
+
+
+
+
+```{python}
+data_test = rand_checkers(40, 40, 40, 40, sigma)
+X_test = data_test[:,0:2]
+y_test = data_test[:,2].astype(int)
+
+dmax = 12
+scores_entropy = np.zeros(dmax)
+scores_gini = np.zeros(dmax)
+
+for i in range(dmax):
+    dt_entropy = tree.DecisionTreeClassifier(criterion="entropy", max_depth=i+1)
+    dt_entropy.fit(X_train, y_train)
+    scores_entropy[i] = dt_entropy.score(X_test, y_test)
+
+    dt_gini = tree.DecisionTreeClassifier(criterion="gini", max_depth=i+1)
+    dt_gini.fit(X_train, y_train)
+    scores_gini[i] = dt_gini.score(X_test, y_test)
+    
+# plt.figure()
+plt.plot(np.arange(dmax), 1-scores_entropy, label="entropy")
+plt.plot(np.arange(dmax), 1-scores_gini, label="gini")
+plt.xlabel('Max depth')
+plt.ylabel('Accuracy Score')
+plt.legend()
+plt.draw()
+```
+
+
+```{python}
+len(data_test)
 ```
