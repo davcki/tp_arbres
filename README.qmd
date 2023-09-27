@@ -78,7 +78,8 @@ y_train   = data4[:,2].astype(int)
 ```
 
 
-Pour i allant de 1 à 12, on calcule le pourcentage d'erreurs commises par les deux arbres dont la profondeur est fixée à i (le pourcentage d'erreurs est calculé grâce au score donné par le module **score** de la fonction **DecisionTreeClassifier**).
+Pour des profondeurs variant de 1 à 12, on calcule le pourcentage d'erreurs commises par les arbres des deux types (Entropie et Gini).
+Le pourcentage d'erreurs est calculé grâce au score donné par le module **score** de la fonction **DecisionTreeClassifier**.
 On obtient ainsi le pourcentage d'erreur de chaque arbre en fonction de leur profondeur, on trace leurs courbes.
 
 
@@ -102,8 +103,8 @@ for i in range(dmax):
 #| echo: false
 
 plt.figure()
-plt.plot(np.arange(dmax), 1-scores_entropy, label="entropy")
-plt.plot(np.arange(dmax), 1-scores_gini, label="gini")
+plt.plot(np.arange(dmax)+1, 1-scores_entropy, label="entropy")
+plt.plot(np.arange(dmax)+1, 1-scores_gini, label="gini")
 plt.xlabel('Max depth')
 plt.ylabel('Accuracy Score')
 plt.legend()
@@ -140,18 +141,18 @@ plt.draw()
 ```
 
 
-Affichons l'arbre de décision à 12 nœuds estimé avec *X_train* et *y_train* de notre ensemble d'apprentissage *data4*.
+Exportons l'arbre de décision à 12 nœuds estimé avec *X_train* et *y_train* de notre ensemble d'apprentissage *data4* au format pdf.
 
 
 ```{python}
 #| output: true
 #| echo: true
 
-from sklearn.tree import plot_tree
-plot_step = 10
-plt.figure()
+import graphviz 
 clf = dt_entropy.fit(X_train, y_train)
-plot_tree(clf, filled=True)
+dot_data = tree.export_graphviz(clf, out_file=None) 
+graph = graphviz.Source(dot_data) 
+graph.render("checkers_tree") 
 ```
 
 
@@ -167,12 +168,15 @@ y_test = data_test[:,2].astype(int)   #étiquettes
 ```
 
 
-Pour i allant de 1 à 12, on calcule le pourcentage d'erreurs de l'estimation de *y_test* par les arbres au critère de gini et au critère d'entropie de profondeurs i (entraînés avec *X_train* et *y_train*).
+On calcule le pourcentage d'erreurs de l'estimation de *y_test* par les arbres au critère de gini et au critère d'entropie (entraînés avec *X_train* et *y_train*) pour des profondeurs de 1 à 11.
 
 On procède de la même manière que pour le calcul du pourcentage d'erreurs empirique précédent.
 
 ```{python}
-dmax = 12
+#| output: true
+#| echo: true
+
+dmax = 11
 scores_entropy = np.zeros(dmax)
 scores_gini = np.zeros(dmax)
 
@@ -184,10 +188,15 @@ for i in range(dmax):
     dt_gini = tree.DecisionTreeClassifier(criterion="gini", max_depth=i+1)
     dt_gini.fit(X_train, y_train)
     scores_gini[i] = dt_gini.score(X_test, y_test)
-    
-# plt.figure()
-plt.plot(np.arange(dmax), 1-scores_entropy, label="entropy")
-plt.plot(np.arange(dmax), 1-scores_gini, label="gini")
+```
+
+```{python}
+#| output: true
+#| echo: false
+
+plt.figure()
+plt.plot(np.arange(dmax)+1, 1-scores_entropy, label="entropy")
+plt.plot(np.arange(dmax)+1, 1-scores_gini, label="gini")
 plt.xlabel('Max depth')
 plt.ylabel('Accuracy Score')
 plt.legend()
@@ -198,6 +207,140 @@ plt.draw()
 Contrairement au calcul du pourcentage d'erreurs empirique, l'estimation peut se dégrader en augmentant la profondeur de l'arbre. En effet, plus l'arbre estimé est profond, plus il est adapté à la prédiction sur son ensemble d'apprentissage et n'est plus forcément robuste sur de nouvelles données.
 
 
+## Aplication à la reconnaissance de chiffres sur des images
+
+
+Nous réitérons les étapes précédentes en utilisant cette fois des données réelles:
+
+Nous importons ici (grâce à **sklearn**) un tableau contenant à chaque ligne un 16_uplets d'entiers de 0 à 16 ; chaque uplet un codage d'une image de chiffre (0, 1, 2, 3, etc.).
+Le chiffre codé par un uplet sera donc son étiquette.
+
+
+On définit en ensemble d'apprentissage *X_train, y_train* représentant 80% des données importées, le reste des données nous sert d'ensemble de validation et est nommé *X_test*, *y_test*.
+
+
 ```{python}
-len(data_test)
+#| output: true
+#| echo: true
+
+digits = datasets.load_digits()
+
+n_samples = len(digits.images)
+
+data_X = digits.images.reshape((n_samples, -1))
+data_y = digits.target
+
+X_train, X_test, y_train, y_test = train_test_split(
+    data_X, data_y, test_size=0.2, shuffle=False)
+```
+
+
+Comme précédemment, on estime des arbres de prédiction selon les critères d'entropie et de Gini pour des profondeurs allant de 1 à 12, et on calcule le pourcentage d'erreurs sur l'ensemble d'apprentissage de chaque arbre.
+On trace le pourcentage d'erreurs des deux types d'arbres en fonction de leurs profondeurs.
+
+
+```{python}
+dmax = 12
+scores_entropy = np.zeros(dmax)  #vecteur qui contiendra les score des arbres entropy
+scores_gini = np.zeros(dmax)     #vecteur qui contiendra les score des arbres gini
+
+for i in range(dmax):
+    dt_entropy = tree.DecisionTreeClassifier(criterion="entropy", max_depth=i+1)
+    dt_entropy.fit(X_train, y_train)
+    scores_entropy[i] = dt_entropy.score(X_train, y_train)
+
+    dt_gini = tree.DecisionTreeClassifier(criterion="gini", max_depth=i+1)
+    dt_gini.fit(X_train, y_train)
+    scores_gini[i] = dt_gini.score(X_train, y_train)
+```
+
+```{python}
+#| output: true
+#| echo: false
+
+plt.figure()
+plt.plot(np.arange(dmax)+1, 1-scores_entropy, label="entropy")
+plt.plot(np.arange(dmax)+1, 1-scores_gini, label="gini")
+plt.xlabel('Max depth')
+plt.ylabel('Accuracy Score')
+plt.legend()
+plt.draw()
+```
+
+
+Le nombre de nœuds qui minimise le pourcentage d'erreurs est
+
+
+```{python}
+#| output: true
+#| echo: true
+
+p = 1-scores_entropy
+m = min(p)
+np.where(p == m)[0][0]+1
+```
+
+
+Nous ne pouvons pas afficher la classification obtenue car ici les observations sont dans $\mathbf{R}^{16}$.
+
+
+Exportons l'arbre de décision à 10 nœuds estimé avec *X_train* et *y_train* de notre ensemble d'apprentissage *data4* au format pdf.
+
+
+```{python}
+#| output: true
+#| echo: true
+
+dt_entropy = tree.DecisionTreeClassifier(criterion="entropy", max_depth=10)
+import graphviz 
+clf = dt_entropy.fit(X_train, y_train)
+dot_data = tree.export_graphviz(clf, out_file=None) 
+graph = graphviz.Source(dot_data) 
+graph.render("digits_tree") 
+```
+
+
+Enfin, on estime les chiffres représentés par les images de notre ensemble de validation et on trace les courbes de pourcentage d'erreur (pour des profondeurs d'arbre jusqu'à 10):
+
+
+```{python}
+#| output: true
+#| echo: true
+
+dmax = 10
+scores_entropy = np.zeros(dmax)
+scores_gini = np.zeros(dmax)
+
+for i in range(dmax):
+    dt_entropy = tree.DecisionTreeClassifier(criterion="entropy", max_depth=i+1)
+    dt_entropy.fit(X_train, y_train)
+    scores_entropy[i] = dt_entropy.score(X_test, y_test)
+
+    dt_gini = tree.DecisionTreeClassifier(criterion="gini", max_depth=i+1)
+    dt_gini.fit(X_train, y_train)
+    scores_gini[i] = dt_gini.score(X_test, y_test)
+```
+
+```{python}
+#| output: true
+#| echo: false
+
+plt.figure()
+plt.plot(np.arange(dmax)+1, 1-scores_entropy, label="entropy")
+plt.plot(np.arange(dmax)+1, 1-scores_gini, label="gini")
+plt.xlabel('Max depth')
+plt.ylabel('Accuracy Score')
+plt.legend()
+plt.draw()
+```
+
+
+Décidons de la profondeur de l'arbre grâce à la validation croisée (nous utilisons la fonction **sklearn.cross_validation.cross_val_score**)
+
+
+```{python}
+#| output: true
+#| echo: true
+
+sklearn.cross_validation.cross_val_score()
 ```

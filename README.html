@@ -69,6 +69,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="README_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -124,7 +126,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>X_train   <span class="op">=</span> data4[:,<span class="dv">0</span>:<span class="dv">2</span>]</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>y_train   <span class="op">=</span> data4[:,<span class="dv">2</span>].astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Pour i allant de 1 à 12, on calcule le pourcentage d’erreurs commises par les deux arbres dont la profondeur est fixée à i (le pourcentage d’erreurs est calculé grâce au score donné par le module <strong>score</strong> de la fonction <strong>DecisionTreeClassifier</strong>). On obtient ainsi le pourcentage d’erreur de chaque arbre en fonction de leur profondeur, on trace leurs courbes.</p>
+<p>Pour des profondeurs variant de 1 à 12, on calcule le pourcentage d’erreurs commises par les arbres des deux types (Entropie et Gini). Le pourcentage d’erreurs est calculé grâce au score donné par le module <strong>score</strong> de la fonction <strong>DecisionTreeClassifier</strong>. On obtient ainsi le pourcentage d’erreur de chaque arbre en fonction de leur profondeur, on trace leurs courbes.</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dmax <span class="op">=</span> <span class="dv">12</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>scores_entropy <span class="op">=</span> np.zeros(dmax)  <span class="co">#vecteur qui contiendra les score des arbres entropy</span></span>
@@ -148,27 +150,141 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>scores_entropy</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="bu">min</span>(p)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>np.where(p <span class="op">==</span> m)[<span class="dv">0</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
-<pre><code>11</code></pre>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>np.where(p <span class="op">==</span> m)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>12</code></pre>
 </div>
 </div>
 <p>Affichons la classification obtenue avec l’arbre de l’entropie à l’aide de la fonction <em>frontiere</em> du fichier <em>tp_arbres_source.py</em>.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dt_entropy.max_depth <span class="op">=</span> <span class="dv">11</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dt_entropy.max_depth <span class="op">=</span> <span class="dv">12</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>frontiere(<span class="kw">lambda</span> x: dt_entropy.predict(x.reshape((<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>))), X_train, y_train, step<span class="op">=</span><span class="dv">100</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Best frontier with entropy criterion"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.draw()</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best scores with entropy criterion: "</span>, dt_entropy.score(X_train, y_train))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Best scores with entropy criterion:  0.9978070175438597</code></pre>
-</div>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.draw()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="README_files/figure-html/cell-9-output-2.png" width="735" height="935"></p>
+<p><img src="README_files/figure-html/cell-9-output-1.png" width="735" height="935"></p>
 </div>
 </div>
+<p>Exportons l’arbre de décision à 12 nœuds estimé avec <em>X_train</em> et <em>y_train</em> de notre ensemble d’apprentissage <em>data4</em> au format pdf.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> graphviz </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> dt_entropy.fit(X_train, y_train)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>dot_data <span class="op">=</span> tree.export_graphviz(clf, out_file<span class="op">=</span><span class="va">None</span>) </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> graphviz.Source(dot_data) </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>graph.render(<span class="st">"checkers_tree"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>'checkers_tree.pdf'</code></pre>
+</div>
+</div>
+<p>Simulons un nouvel ensemble d’apprentissage <em>data_test</em> d’un echantillon de taille 160 suivant la même loi que l’échantillon simulé pour obtenir <em>data4</em>.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="op">=</span> rand_checkers(<span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">40</span>, sigma)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> data_test[:,<span class="dv">0</span>:<span class="dv">2</span>]             <span class="co">#observations</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y_test <span class="op">=</span> data_test[:,<span class="dv">2</span>].astype(<span class="bu">int</span>)   <span class="co">#étiquettes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On calcule le pourcentage d’erreurs de l’estimation de <em>y_test</em> par les arbres au critère de gini et au critère d’entropie (entraînés avec <em>X_train</em> et <em>y_train</em>) pour des profondeurs de 1 à 11.</p>
+<p>On procède de la même manière que pour le calcul du pourcentage d’erreurs empirique précédent.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dmax <span class="op">=</span> <span class="dv">11</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>scores_entropy <span class="op">=</span> np.zeros(dmax)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>scores_gini <span class="op">=</span> np.zeros(dmax)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dmax):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    dt_entropy <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    dt_entropy.fit(X_train, y_train)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    scores_entropy[i] <span class="op">=</span> dt_entropy.score(X_test, y_test)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    dt_gini <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"gini"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    dt_gini.fit(X_train, y_train)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    scores_gini[i] <span class="op">=</span> dt_gini.score(X_test, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<p><img src="README_files/figure-html/cell-13-output-1.png" width="867" height="992"></p>
+</div>
+</div>
+<p>Contrairement au calcul du pourcentage d’erreurs empirique, l’estimation peut se dégrader en augmentant la profondeur de l’arbre. En effet, plus l’arbre estimé est profond, plus il est adapté à la prédiction sur son ensemble d’apprentissage et n’est plus forcément robuste sur de nouvelles données.</p>
+<section id="aplication-à-la-reconnaissance-de-chiffres-sur-des-images" class="level2">
+<h2 class="anchored" data-anchor-id="aplication-à-la-reconnaissance-de-chiffres-sur-des-images">Aplication à la reconnaissance de chiffres sur des images</h2>
+<p>Nous réitérons les étapes précédentes en utilisant cette fois des données réelles:</p>
+<p>Nous importons ici (grâce à <strong>sklearn</strong>) un tableau contenant à chaque ligne un 16_uplets d’entiers de 0 à 16 ; chaque uplet un codage d’une image de chiffre (0, 1, 2, 3, etc.). Le chiffre codé par un uplet sera donc son étiquette.</p>
+<p>On définit en ensemble d’apprentissage <em>X_train, y_train</em> représentant 80% des données importées, le reste des données nous sert d’ensemble de validation et est nommé <em>X_test</em>, <em>y_test</em>.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>digits <span class="op">=</span> datasets.load_digits()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="bu">len</span>(digits.images)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>data_X <span class="op">=</span> digits.images.reshape((n_samples, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>data_y <span class="op">=</span> digits.target</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    data_X, data_y, test_size<span class="op">=</span><span class="fl">0.2</span>, shuffle<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Comme précédemment, on estime des arbres de prédiction selon les critères d’entropie et de Gini pour des profondeurs allant de 1 à 12, et on calcule le pourcentage d’erreurs sur l’ensemble d’apprentissage de chaque arbre. On trace le pourcentage d’erreurs des deux types d’arbres en fonction de leurs profondeurs.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dmax <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>scores_entropy <span class="op">=</span> np.zeros(dmax)  <span class="co">#vecteur qui contiendra les score des arbres entropy</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>scores_gini <span class="op">=</span> np.zeros(dmax)     <span class="co">#vecteur qui contiendra les score des arbres gini</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dmax):</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    dt_entropy <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    dt_entropy.fit(X_train, y_train)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    scores_entropy[i] <span class="op">=</span> dt_entropy.score(X_train, y_train)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    dt_gini <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"gini"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    dt_gini.fit(X_train, y_train)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    scores_gini[i] <span class="op">=</span> dt_gini.score(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<p><img src="README_files/figure-html/cell-16-output-1.png" width="867" height="992"></p>
+</div>
+</div>
+<p>Le nombre de nœuds qui minimise le pourcentage d’erreurs est</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>scores_entropy</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="bu">min</span>(p)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>np.where(p <span class="op">==</span> m)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>10</code></pre>
+</div>
+</div>
+<p>Nous ne pouvons pas afficher la classification obtenue car ici les observations sont dans <span class="math inline">\(\mathbf{R}^{16}\)</span>.</p>
+<p>Exportons l’arbre de décision à 10 nœuds estimé avec <em>X_train</em> et <em>y_train</em> de notre ensemble d’apprentissage <em>data4</em> au format pdf.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dt_entropy <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, max_depth<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> graphviz </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> dt_entropy.fit(X_train, y_train)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>dot_data <span class="op">=</span> tree.export_graphviz(clf, out_file<span class="op">=</span><span class="va">None</span>) </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> graphviz.Source(dot_data) </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>graph.render(<span class="st">"digits_tree"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>'digits_tree.pdf'</code></pre>
+</div>
+</div>
+<p>Enfin, on estime les chiffres représentés par les images de notre ensemble de validation et on trace les courbes de pourcentage d’erreur (pour des profondeurs d’arbre jusqu’à 10):</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dmax <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>scores_entropy <span class="op">=</span> np.zeros(dmax)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>scores_gini <span class="op">=</span> np.zeros(dmax)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(dmax):</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    dt_entropy <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"entropy"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    dt_entropy.fit(X_train, y_train)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    scores_entropy[i] <span class="op">=</span> dt_entropy.score(X_test, y_test)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    dt_gini <span class="op">=</span> tree.DecisionTreeClassifier(criterion<span class="op">=</span><span class="st">"gini"</span>, max_depth<span class="op">=</span>i<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    dt_gini.fit(X_train, y_train)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    scores_gini[i] <span class="op">=</span> dt_gini.score(X_test, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="cell-output cell-output-display">
+<p><img src="README_files/figure-html/cell-20-output-1.png" width="867" height="992"></p>
+</div>
+</div>
+</section>
 
 </main>
 <!-- /main column -->
