@@ -58,16 +58,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="README_files/libs/clipboard/clipboard.min.js"></script>
-<script src="README_files/libs/quarto-html/quarto.js"></script>
-<script src="README_files/libs/quarto-html/popper.min.js"></script>
-<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="README_files/libs/quarto-html/anchor.min.js"></script>
-<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="README_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="README_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="tp_arbres_files/libs/clipboard/clipboard.min.js"></script>
+<script src="tp_arbres_files/libs/quarto-html/quarto.js"></script>
+<script src="tp_arbres_files/libs/quarto-html/popper.min.js"></script>
+<script src="tp_arbres_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="tp_arbres_files/libs/quarto-html/anchor.min.js"></script>
+<link href="tp_arbres_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="tp_arbres_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="tp_arbres_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="tp_arbres_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="tp_arbres_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -143,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
-<p><img src="README_files/figure-html/cell-7-output-1.png" width="867" height="992"></p>
+<p><img src="tp_arbres_files/figure-html/cell-7-output-1.png" width="867" height="992"></p>
 </div>
 </div>
 <p>Le nombre de nœuds qui minimise le pourcentage d’erreurs est</p>
@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="bu">min</span>(p)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>np.where(p <span class="op">==</span> m)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>12</code></pre>
+<pre><code>11</code></pre>
 </div>
 </div>
 <p>Affichons la classification obtenue avec l’arbre de l’entropie à l’aide de la fonction <em>frontiere</em> du fichier <em>tp_arbres_source.py</em>.</p>
@@ -164,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Best frontier with entropy criterion"</span>)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.draw()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="README_files/figure-html/cell-9-output-1.png" width="735" height="935"></p>
+<p><img src="tp_arbres_files/figure-html/cell-9-output-1.png" width="735" height="935"></p>
 </div>
 </div>
 <p>Exportons l’arbre de décision à 12 nœuds estimé avec <em>X_train</em> et <em>y_train</em> de notre ensemble d’apprentissage <em>data4</em> au format pdf.</p>
@@ -178,6 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>'checkers_tree.pdf'</code></pre>
 </div>
 </div>
+<p>Affichons-en un calculé à partir d’un échantillon déjà simulé avant l’exécution de ce code présent. <embed src="representation_arbres_pdf/checkers_tree.pdf" class="img-fluid" style="width:100.0%"></p>
 <p>Simulons un nouvel ensemble d’apprentissage <em>data_test</em> d’un echantillon de taille 160 suivant la même loi que l’échantillon simulé pour obtenir <em>data4</em>.</p>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_test <span class="op">=</span> rand_checkers(<span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">40</span>, sigma)</span>
@@ -202,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display">
-<p><img src="README_files/figure-html/cell-13-output-1.png" width="867" height="992"></p>
+<p><img src="tp_arbres_files/figure-html/cell-13-output-1.png" width="867" height="992"></p>
 </div>
 </div>
 <p>Contrairement au calcul du pourcentage d’erreurs empirique, l’estimation peut se dégrader en augmentant la profondeur de l’arbre. En effet, plus l’arbre estimé est profond, plus il est adapté à la prédiction sur son ensemble d’apprentissage et n’est plus forcément robuste sur de nouvelles données.</p>
@@ -239,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
-<p><img src="README_files/figure-html/cell-16-output-1.png" width="867" height="992"></p>
+<p><img src="tp_arbres_files/figure-html/cell-16-output-1.png" width="867" height="992"></p>
 </div>
 </div>
 <p>Le nombre de nœuds qui minimise le pourcentage d’erreurs est</p>
@@ -264,6 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>'digits_tree.pdf'</code></pre>
 </div>
 </div>
+<p>Affichons-en un calculé à partir d’un échantillon déjà simulé avant l’exécution de ce code présent. <embed src="representation_arbres_pdf/digits_tree.pdf" class="img-fluid" style="width:100.0%"></p>
 <p>Enfin, on estime les chiffres représentés par les images de notre ensemble de validation et on trace les courbes de pourcentage d’erreur (pour des profondeurs d’arbre jusqu’à 10):</p>
 <div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dmax <span class="op">=</span> <span class="dv">10</span></span>
@@ -281,8 +283,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell" data-execution_count="19">
 <div class="cell-output cell-output-display">
-<p><img src="README_files/figure-html/cell-20-output-1.png" width="867" height="992"></p>
+<p><img src="tp_arbres_files/figure-html/cell-20-output-1.png" width="867" height="992"></p>
 </div>
+</div>
+<p>Décidons de la profondeur de l’arbre grâce à la validation croisée (nous utilisons la fonction <strong>sklearn.cross_validation.cross_val_score</strong>)</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#sklearn.cross_validation.cross_val_score()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 

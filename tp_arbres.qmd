@@ -156,6 +156,10 @@ graph.render("checkers_tree")
 ```
 
 
+Affichons-le:
+![Arbre de décision au critère d'Entropie calculé avec data4](representation_arbres_pdf/checkers_tree.pdf){width=100%}
+
+
 Simulons un nouvel ensemble d'apprentissage *data_test* d'un echantillon de taille 160 suivant la même loi que l'échantillon simulé pour obtenir *data4*.
 
 ```{python}
@@ -300,6 +304,11 @@ graph.render("digits_tree")
 ```
 
 
+Affichons-le:
+![Arbre de décision au critère d'Entropie calculé avec digits](representation_arbres_pdf/digits_tree.pdf){width=100%}
+
+
+
 Enfin, on estime les chiffres représentés par les images de notre ensemble de validation et on trace les courbes de pourcentage d'erreur (pour des profondeurs d'arbre jusqu'à 10):
 
 
@@ -342,5 +351,6 @@ Décidons de la profondeur de l'arbre grâce à la validation croisée (nous uti
 #| output: true
 #| echo: true
 
-sklearn.cross_validation.cross_val_score()
+#sklearn.cross_validation.cross_val_score()
 ```
+
