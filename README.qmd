@@ -2,9 +2,6 @@
 title: "Travail Pratique 2 - ARBRES"
 author: "David Czarnecki"
 format: html
-toc: true
-number-sections: true
-jupyter: python3
 ---
 
 

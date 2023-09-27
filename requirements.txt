@@ -1,6 +1,0 @@
-numpy
-matplotlib
-sykitlearn
-os
-seaborn
-sklearn
