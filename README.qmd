@@ -140,11 +140,13 @@ plt.draw()
 ```
 
 
+Affichons l'arbre de décision à 12 nœuds estimé avec *X_train* et *y_train* de notre ensemble d'apprentissage *data4*.
 
 
 ```{python}
 #| output: true
 #| echo: true
+
 from sklearn.tree import plot_tree
 plot_step = 10
 plt.figure()
@@ -153,13 +155,23 @@ plot_tree(clf, filled=True)
 ```
 
 
-
+Simulons un nouvel ensemble d'apprentissage *data_test* d'un echantillon de taille 160 suivant la même loi que l'échantillon simulé pour obtenir *data4*.
 
 ```{python}
-data_test = rand_checkers(40, 40, 40, 40, sigma)
-X_test = data_test[:,0:2]
-y_test = data_test[:,2].astype(int)
+#| output: true
+#| echo: true
 
+data_test = rand_checkers(40, 40, 40, 40, sigma)
+X_test = data_test[:,0:2]             #observations
+y_test = data_test[:,2].astype(int)   #étiquettes
+```
+
+
+Pour i allant de 1 à 12, on calcule le pourcentage d'erreurs de l'estimation de *y_test* par les arbres au critère de gini et au critère d'entropie de profondeurs i (entraînés avec *X_train* et *y_train*).
+
+On procède de la même manière que pour le calcul du pourcentage d'erreurs empirique précédent.
+
+```{python}
 dmax = 12
 scores_entropy = np.zeros(dmax)
 scores_gini = np.zeros(dmax)
@@ -181,6 +193,9 @@ plt.ylabel('Accuracy Score')
 plt.legend()
 plt.draw()
 ```
+
+
+
 
 
 ```{python}
