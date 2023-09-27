@@ -195,7 +195,7 @@ plt.draw()
 ```
 
 
-
+Contrairement au calcul du pourcentage d'erreurs empirique, l'estimation peut se dégrader en augmentant la profondeur de l'arbre. En effet, plus l'arbre estimé est profond, plus il est adapté à la prédiction sur son ensemble d'apprentissage et n'est plus forcément robuste sur de nouvelles données.
 
 
 ```{python}
