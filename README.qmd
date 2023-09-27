@@ -1,7 +1,7 @@
 ---
 title: "Travail Pratique 2 - ARBRES"
-author: "aaaa"
-format: pdf
+author: "David Czarnecki"
+format: html
 toc: true
 number-sections: true
 jupyter: python3
