@@ -13,3 +13,6 @@ Téléchargez dans le même répertoire les fichiers suivants:
 - **tp_arbres.html**
 
 puis ouvrir le fichier **tp_arbres.html** dans un navigateur web.
+
+
+La version de python nécessaire est **python 3.11.4** et les packages nécessaires sont listés dans le fichier **requirements.txt**
