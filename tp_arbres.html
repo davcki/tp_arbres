@@ -103,7 +103,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>Nous allons manipuler des arbres de décision dans le cadre d’une classification. A partir de différentes variables, nous souhaitons attribuer une étiquette (ici des entiers naturels) à un individu. Dans le cadre du modèle linéaire, on cherche à prédire une valeur numérique à partir des valeurs que prennent des variables et non une classe. Cela ne nous empêche pas de définir une certaine homogénéité. Par exemple, deux valeurs numériques pourrait appartenir à la même classe si leurs parties entières sont égales. Cela nous permettrait de créer des arbres de décision pour des ensembles d’apprentissage <span class="math inline">\(\{ (\textbf{x}_i, y_i)_{1\leq i \leq n}\}\)</span>.</p>
+<p>Nous allons manipuler des arbres de décision dans le cadre d’une classification. A partir de différentes variables, nous souhaitons attribuer une étiquette (ici des entiers naturels) à un individu.</p>
+<p>Dans le cadre du modèle linéaire, on cherche à prédire une valeur numérique à partir des valeurs que prennent des variables et non une classe.</p>
+<p>Il nous est possible de définir une certaine homogénéité. Par exemple, deux valeurs numériques pourrait appartenir à la même classe si leurs parties entières sont égales.</p>
+<p>Cela nous permettrait de créer des arbres de décision pour des ensembles d’apprentissage <span class="math inline">\(\{ (\textbf{x}_i, y_i)_{1\leq i \leq n}\}\)</span>.</p>
 <p>On simule une réalisation d’un échantillon de taille 456 avec la fonction rand_checkers définie dans <strong>tp_arbres_source.py</strong>.</p>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>n1 <span class="op">=</span> <span class="dv">118</span></span>
@@ -152,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>scores_entropy</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="bu">min</span>(p)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>np.where(p <span class="op">==</span> m)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="47">
+<div class="cell-output cell-output-display" data-execution_count="67">
 <pre><code>12</code></pre>
 </div>
 </div>
@@ -175,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>dot_data <span class="op">=</span> tree.export_graphviz(clf, out_file<span class="op">=</span><span class="va">None</span>) </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> graphviz.Source(dot_data) </span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>graph.render(<span class="st">"checkers_tree"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="49">
+<div class="cell-output cell-output-display" data-execution_count="69">
 <pre><code>'checkers_tree.pdf'</code></pre>
 </div>
 </div>
@@ -248,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>scores_entropy</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="bu">min</span>(p)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>np.where(p <span class="op">==</span> m)[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">+</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="56">
+<div class="cell-output cell-output-display" data-execution_count="76">
 <pre><code>10</code></pre>
 </div>
 </div>
@@ -261,7 +264,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>dot_data <span class="op">=</span> tree.export_graphviz(clf, out_file<span class="op">=</span><span class="va">None</span>) </span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>graph <span class="op">=</span> graphviz.Source(dot_data) </span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>graph.render(<span class="st">"digits_tree"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="57">
+<div class="cell-output cell-output-display" data-execution_count="77">
 <pre><code>'digits_tree.pdf'</code></pre>
 </div>
 </div>
@@ -303,9 +306,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    scores[i] <span class="op">=</span> cross_val_score(arbre, data_X, data_y, cv<span class="op">=</span><span class="dv">5</span>).mean()</span>
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>scores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="60">
-<pre><code>array([0.19532807, 0.33443516, 0.50306097, 0.63218508, 0.73349427,
-       0.77410245, 0.8024853 , 0.80858867, 0.80024605, 0.80414268])</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="80">
+<pre><code>array([0.19532807, 0.33443516, 0.50306097, 0.63218508, 0.73404828,
+       0.77521665, 0.80638657, 0.80637574, 0.81080935, 0.79970288])</code></pre>
 </div>
 </div>
 <p>On obtient le plus grand score estimé avec une profondeur d’arbre égale à 9.</p>

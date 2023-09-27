@@ -38,8 +38,12 @@ _ = sns.axes_style()
 
 
 Nous allons manipuler des arbres de décision dans le cadre d'une classification. A partir de différentes variables, nous souhaitons attribuer une étiquette (ici des entiers naturels) à un individu.
+
 Dans le cadre du modèle linéaire, on cherche à prédire une valeur numérique à partir des valeurs que prennent des variables et non une classe.
-Cela ne nous empêche pas de définir une certaine homogénéité. Par exemple, deux valeurs numériques pourrait appartenir à la même classe si leurs parties entières sont égales. Cela nous permettrait de créer des arbres de décision pour des ensembles d'apprentissage $\{ (\textbf{x}_i, y_i)_{1\leq i \leq n}\}$.
+
+Il nous est possible de définir une certaine homogénéité. Par exemple, deux valeurs numériques pourrait appartenir à la même classe si leurs parties entières sont égales. 
+
+Cela nous permettrait de créer des arbres de décision pour des ensembles d'apprentissage $\{ (\textbf{x}_i, y_i)_{1\leq i \leq n}\}$.
 
 
 On simule une réalisation d'un échantillon de taille 456 avec la fonction rand_checkers définie dans **tp_arbres_source.py**.
